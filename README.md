@@ -11,8 +11,8 @@
     - 'user.apps.UserConfig'
 - 進行資料庫同步
 
-python manage.py migrate
-後台新增超級管理者
+    - python manage.py migrate
+- 後台新增超級管理者
 
     - python manage.py createsuperuser
     - 127.0.0.1:8000/admin
@@ -20,3 +20,22 @@ python manage.py migrate
 
     - LANGUAGE_CODE = 'zh-Hant'
     - TIME_ZONE = 'Asia/Taipei'
+
+##　 User
+
+- templates/user/register.html
+- views.py
+    - 新增 user_register 方法
+        - return render(request,'./user/register.html')
+- 新增 urls.py
+    - path('register/', views.user_register),
+##　 todolist
+
+- urls.py ==> user/urls.py
+    - path('user/',include('user.urls'))
+
+## python manage.py shell
+- from django.contrib.auth.models import User
+- User.objects.all()
+- User.objects.get(id=1)
+- User.objects.get(username='jerry')
