@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 
 def user_logout(request):
     logout(request)
-    return redirect('profile')
+    return redirect('todo')
 
 
 def profile(request):
@@ -38,7 +38,7 @@ def user_login(request):
                 else:
                     login(request, user)
                     message = '登入中.....'
-                    return redirect('profile')
+                    return redirect('todo')
 
         elif request.POST.get('register'):
             return redirect('register')
@@ -73,8 +73,11 @@ def user_register(request):
             if User.objects.filter(username=username).exists():
                 message = '帳號重複'
             else:
-                User.objects.create_user(
-                    username=username, password=password1).save()
+                user = User.objects.create_user(
+                    username=username, password=password1)
+                user.save()
                 message = '註冊成功!'
+                login(request, user)
+                return redirect('profile')
 
     return render(request, './user/register.html', {'form': form, 'message': message})
