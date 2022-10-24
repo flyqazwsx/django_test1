@@ -6,7 +6,23 @@ from todo.forms import TodoForm
 from .models import Todo
 from datetime import datetime
 
-# Create your views here.
+
+@login_required
+def completed_by_id(request, id):
+    # 篩選已完成項目
+    todo = Todo.objects.get(id=id)
+    todo.completed = not todo.completed
+    todo.date_completed = datetime.now() if todo.completed else None
+    todo.save()
+
+    return redirect('todo')
+
+
+@login_required
+def delete(request, id):
+    todo = Todo.objects.get(id=id)
+    todo.delete()
+    return redirect('todo')
 
 
 @login_required
@@ -26,7 +42,7 @@ def create_todo(request):
                 form = TodoForm(request.POST)
                 todo = form.save(commit=False)
                 todo.user = request.user
-                todo.date_completed = datetime.now() if todo.date_completed else None
+                todo.date_completed = datetime.now() if todo.completed else None
                 todo.save()
 
                 return redirect('todo')

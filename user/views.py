@@ -1,9 +1,9 @@
-import imp
 from django.shortcuts import redirect, render
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .forms import MyUserForm
 
 
 @login_required
@@ -19,6 +19,7 @@ def profile(request):
 
 def user_login(request):
     message, username = '', ''
+    # 是否是POST表單
     if request.method == 'POST':
         if request.POST.get('login'):
             username = request.POST.get('username')
@@ -51,7 +52,7 @@ def user_login(request):
 
 def user_register(request):
     # 產生使用者表單
-    form = UserCreationForm()
+    form = MyUserForm()
     message = ''
 
     # 檢查是get or post
@@ -62,6 +63,7 @@ def user_register(request):
         username = request.POST.get('username')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
+        email = request.POST.get('email')
         # 註冊功能
         # 密碼不能少於8各字元
         # 兩次密碼是否相同
@@ -76,7 +78,7 @@ def user_register(request):
                 message = '帳號重複'
             else:
                 user = User.objects.create_user(
-                    username=username, password=password1)
+                    username=username, password=password1, email=email)
                 user.save()
                 message = '註冊成功!'
                 login(request, user)

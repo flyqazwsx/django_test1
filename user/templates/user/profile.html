@@ -3,8 +3,13 @@
 <h1>Profile</h1>
 {% if user.is_authenticated %}
 <ul>
-    <li> {{user.email}}</li>
-    <li> {{user.date_joined}}</li>
+    {% if user.is_superuser %}
+    <li>管理員</li>
+    {% endif %}
+    <li>姓名:{{user.username}}</li>
+    <li> Email:{{user.email}}</li>
+    <li> 註冊日期:{{user.date_joined}}</li>
+    <li> 上一次登入日期:{{user.last_login}}</li>
 </ul>
 {% endif %}
 {% endblock %}

@@ -4,6 +4,33 @@
 <title>首頁</title>
 {% endblock %}
 
+{% block style %}
+<style>
+    form {
+        display: inline-block;
+        margin: 6px 0px;
+    }
+
+    li {
+        display: inline-block;
+        width: 300px;
+        background-color: rgb(235, 241, 253);
+        margin: 6px 0px;
+        border: 2px solid darkblue;
+        padding: 6px;
+        border-radius: 6px;
+    }
+
+    button {
+        margin-top: 6px;
+        background-color: aqua;
+        border: none;
+        padding: 4px 8px;
+
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <h1>TodoList</h1>
 {% if not request.user.is_authenticated %}
@@ -28,6 +55,12 @@
             {{todo.title}}
             {% endif %}
         </a>
+        <form action="{% url 'delete' todo.id %}">
+            <button type="submit">刪除</button>
+        </form>
+        <form action="{% url 'completed_by_id' todo.id %}">
+            <button type="submit">完成</button>
+        </form>
     </li>
     {% endfor %}
     {% endif %}
