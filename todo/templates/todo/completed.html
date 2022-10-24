@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>已完成事項</title>
+{% endblock %}
+
+{% block content %}
+<h1>Completed</h1>
+<ul>
+
+    {% for todo in todos %}
+    {% if todo.completed %}
+    <li>
+        <small>{{todo.date_completed}}</small><br>
+        <!-- path('view/<int:id>') -->
+        ---><a href="{% url 'viewtodo' todo.id %}">
+
+            {{todo.title}}
+        </a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -6,4 +6,4 @@ class TodoForm(ModelForm):
     # 設定
     class Meta:
         model = Todo
-        fields = ['important', 'title', 'text']
+        fields = ['title', 'text', 'important', 'completed']
