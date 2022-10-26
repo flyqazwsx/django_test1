@@ -1,34 +1,11 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
 <title>首頁</title>
 {% endblock %}
 
 {% block style %}
-<style>
-    form {
-        display: inline-block;
-        margin: 6px 0px;
-    }
-
-    li {
-        display: inline-block;
-        width: 300px;
-        background-color: rgb(235, 241, 253);
-        margin: 6px 0px;
-        border: 2px solid darkblue;
-        padding: 6px;
-        border-radius: 6px;
-    }
-
-    button {
-        margin-top: 6px;
-        background-color: aqua;
-        border: none;
-        padding: 4px 8px;
-
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/todo.css' %}">
 {% endblock %}
 
 {% block content %}
