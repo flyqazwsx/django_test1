@@ -38,4 +38,4 @@
 - from django.contrib.auth.models import User
 - User.objects.all()
 - User.objects.get(id=1)
-- User.objects.get(username='jerry')
+- User.objects.get(username='fly')

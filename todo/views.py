@@ -1,4 +1,5 @@
 from email import message
+from turtle import Turtle
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -39,7 +40,7 @@ def create_todo(request):
         if request.method == 'POST':
             print(request.POST)
             if request.user.is_authenticated:
-                form = TodoForm(request.POST)
+                form = TodoForm(request.POST, request.FILES)
                 todo = form.save(commit=False)
                 todo.user = request.user
                 todo.date_completed = datetime.now() if todo.completed else None
@@ -50,6 +51,28 @@ def create_todo(request):
         print(e)
         message = '資料輸入錯誤，請重新輸入'
     return render(request, './todo/createtodo.html', {'form': form, 'message': message})
+
+
+@login_required
+def sorttodo(request):
+    try:
+        todos = Todo.objects.filter(user=request.user)
+        # None
+        sort = request.COOKIES.get('sort')
+        print(sort)
+
+        sort = '1' if not sort or sort == '0' else '0'
+
+        if sort == '1':
+            todos = todos.order_by('-created')
+
+    except Exception as e:
+        print(e)
+
+    response = render(request, './todo/todo.html', {'todos': todos})
+    response.set_cookie('sort', sort)
+
+    return response
 
 
 def todo(request):
@@ -73,7 +96,7 @@ def viewtodo(request, id):
             # 更新
             if request.POST.get('update'):
                 # 將POST回傳值填入todo,產生Form表單
-                form = TodoForm(request.POST, instance=todo)
+                form = TodoForm(request.POST, request.FILES, instance=todo)
                 if form.is_valid():
                     # 資料暫存
                     todo = form.save(commit=False)

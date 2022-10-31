@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from pickle import MEMOIZE
 import pymysql
 
 pymysql.install_as_MySQLdb()
@@ -27,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2-7v9%#8xz%886uu=3+m+vc-!=9&c1@&0z#+8zvl6ursci$k8$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -161,3 +162,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/user/login/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+
+MEDIA_URL = '/media/'

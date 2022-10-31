@@ -11,6 +11,7 @@ class Todo(models.Model):
     date_completed = models.DateTimeField(blank=True, null=True)
     important = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
+    image = models.ImageField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

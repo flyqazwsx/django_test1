@@ -6,7 +6,7 @@
 
 {% block content %}
 <h1>CreatedTodo</h1>
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">建立</button>
